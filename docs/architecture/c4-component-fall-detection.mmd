@@ -1,0 +1,10 @@
+flowchart LR
+    subgraph FallDetector
+        seq[deque feature_sequence]
+        fe[FeatureExtractor]
+        mm[ModelManager]
+        am[AudioManager]
+    end
+    fe --> seq
+    seq --> mm
+    mm --> am

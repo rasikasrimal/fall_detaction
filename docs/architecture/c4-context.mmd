@@ -1,0 +1,6 @@
+flowchart LR
+    user([User]) -->|provides video| cli["CLI Fall Detector"]
+    cli --> mp[("MediaPipe Pose")]
+    cli --> model[("ML Models")]
+    model -->|scores| cli
+    cli --> audio[("Audio Output")]

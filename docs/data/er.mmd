@@ -1,0 +1,10 @@
+erDiagram
+  FRAME {
+    int index
+    float timestamp
+  }
+  FALL_EVENT {
+    float probability
+    string status
+  }
+  FRAME ||--o{ FALL_EVENT : triggers

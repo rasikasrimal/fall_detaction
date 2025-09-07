@@ -1,0 +1,7 @@
+@startuml
+node "User Machine" {
+  [CLI Script] --> (MediaPipe)
+  [CLI Script] --> (TFLite/PyTorch)
+  [CLI Script] --> (Pygame)
+}
+@enduml
