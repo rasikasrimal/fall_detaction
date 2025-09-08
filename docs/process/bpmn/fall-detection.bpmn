@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" targetNamespace="https://example.com/fall">
+  <process id="fallDetection" isExecutable="false">
+    <startEvent id="start" name="Video Provided"/>
+    <task id="extract" name="Extract Pose Keypoints"/>
+    <task id="predict" name="Score Sequence"/>
+    <exclusiveGateway id="gw" name="Fall?"/>
+    <task id="alarm" name="Trigger Alarm"/>
+    <endEvent id="end" name="Done"/>
+    <sequenceFlow sourceRef="start" targetRef="extract"/>
+    <sequenceFlow sourceRef="extract" targetRef="predict"/>
+    <sequenceFlow sourceRef="predict" targetRef="gw"/>
+    <sequenceFlow sourceRef="gw" targetRef="alarm">
+      <conditionExpression xsi:type="tFormalExpression">true</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow sourceRef="gw" targetRef="end"/>
+    <sequenceFlow sourceRef="alarm" targetRef="end"/>
+  </process>
+</definitions>
