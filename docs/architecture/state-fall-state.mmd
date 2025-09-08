@@ -1,7 +1,0 @@
-stateDiagram-v2
-    [*] --> Collecting
-    Collecting --> Normal: sequence ready & prob<threshold
-    Collecting --> FallDetected: prob>=threshold
-    Normal --> FallDetected: prob>=threshold for N frames
-    FallDetected --> Normal: alarm_duration elapsed
-    FallDetected --> Collecting: manual reset
