@@ -157,6 +157,3 @@ flowchart LR
 ```
 
 The component diagram defines the primary module boundaries. The CLI layer houses the executable scripts. Pose extraction is delegated to MediaPipe, while model inference is handled by either TensorFlow Lite or PyTorch. The alarm handler emits visual or audio cues. Each module communicates through the CLI, clarifying responsibilities and minimizing cross-dependencies.
-
-## Additional Diagram Suggestions
-Currently none.
