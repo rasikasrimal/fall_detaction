@@ -1,7 +1,0 @@
-flowchart LR
-  User((User)) -->|video| VP[VideoProcessor]
-  VP --> FE[FeatureExtractor]
-  FE --> MM[ModelManager]
-  MM -->|score| FD[(Fall Decision)]
-  FD --> AM[AudioManager]
-  AM --> Alarm[(Alarm Output)]
