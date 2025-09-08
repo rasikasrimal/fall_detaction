@@ -1,7 +1,0 @@
-flowchart LR
-  subgraph SequenceProcessing
-    FE[FeatureExtractor] --> Seq[deque]
-    Seq --> MM[ModelManager]
-    MM -->|probability| Decision[Evaluator]
-  end
-  Decision --> AM[AudioManager]
