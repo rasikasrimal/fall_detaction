@@ -7,6 +7,9 @@
 - [Sequence Diagram](#sequence-diagram)
 - [Use Case Diagram](#use-case-diagram)
 - [Entity Relationship Diagram](#entity-relationship-diagram)
+- [Deployment Diagram](#deployment-diagram)
+- [State Diagram](#state-diagram)
+- [Component Diagram](#component-diagram)
 - [Additional Diagram Suggestions](#additional-diagram-suggestions)
 
 ## Data Flow Diagram
@@ -99,7 +102,58 @@ The use case diagram presents a simplified overview of external interactions. It
 ## Entity Relationship Diagram
 The system operates entirely in memory and does not maintain persistent storage, so an entity relationship diagram would add little value. No discrete data entities or relationships are created or stored; incoming frames and derived features are processed transiently and discarded after inference. Consequently, traditional database modeling concepts are not applicable to this project.
 
-## Additional Diagram Suggestions
-- Deployment diagram showing packaging for different environments
-- State diagram for alarm activation and cooldown
-- Component diagram outlining module boundaries
+## Deployment Diagram
+```mermaid
+flowchart LR
+    Source[Source Code Repository]
+    subgraph Development
+        Venv[Virtual Env + Scripts]
+    end
+    subgraph EdgeDevice[Edge Device]
+        Package[Python Package + TFLite Model]
+    end
+    subgraph Cloud[Cloud Container]
+        Image[Docker Image]
+    end
+    Source --> Venv
+    Source --> Package
+    Source --> Image
+```
+
+The deployment diagram illustrates how the project can be packaged for multiple targets. Developers run the raw source within a virtual environment, enabling rapid iteration. For edge devices such as a Raspberry Pi, the code and TFLite model are bundled as a lightweight Python package. A Docker image encapsulates the same source for cloud or server deployments, ensuring consistent dependencies across platforms.
+
+## State Diagram
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Active : Fall detected
+    Active --> Cooldown : Alarm duration elapsed
+    Cooldown --> Idle : Cooldown elapsed
+```
+
+The state diagram captures alarm behavior. The system idles until a fall is detected, at which point it enters an active state and raises an alarm. After the alarm plays for the configured duration, the application transitions into a cooldown state that suppresses additional alerts. Once the cooldown timer expires, the system returns to idle, ready to detect subsequent falls.
+
+## Component Diagram
+```mermaid
+flowchart LR
+    subgraph CLI
+        run_tf[run_tf.py]
+        tf_lstm[tf_lstm.py]
+    end
+    subgraph PoseExtraction
+        MediaPipe[MediaPipe Pose]
+    end
+    subgraph ModelInference
+        TFLite[TensorFlow Lite]
+        LSTM[PyTorch LSTM]
+    end
+    subgraph AlarmHandler
+        Visual[Visual Cue]
+        Audio[Audio Cue]
+    end
+    CLI --> PoseExtraction
+    CLI --> ModelInference
+    CLI --> AlarmHandler
+```
+
+The component diagram defines the primary module boundaries. The CLI layer houses the executable scripts. Pose extraction is delegated to MediaPipe, while model inference is handled by either TensorFlow Lite or PyTorch. The alarm handler emits visual or audio cues. Each module communicates through the CLI, clarifying responsibilities and minimizing cross-dependencies.
