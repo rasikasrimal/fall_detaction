@@ -16,9 +16,9 @@ flowchart TD
     CLI --> Video[Video Frames]
     Video --> Pose[MediaPipe Pose]
     Pose --> Normalize[Feature Normalization]
-    Normalize --> Model[ML Model (TFLite/PyTorch)]
+    Normalize --> Model["ML Model (TFLite / PyTorch)"]
     Model --> Decision{Fall Detected?}
-    Decision -->|Yes| Alarm[Visual/Audio Alarm]
+    Decision -->|Yes| Alarm[Visual / Audio Alarm]
     Decision -->|No| Loop[Continue Processing]
     Alarm --> Loop
 ```
